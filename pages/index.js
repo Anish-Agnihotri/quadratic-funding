@@ -77,6 +77,7 @@ export default function Home() {
     {Header: "Remove", accessor: 'number', Cell: row => <button onClick={() => removeGrant(row.index)} className="close-button">X</button>},
     {Header: 'Grant', accessor: 'number', Cell: row => <span className="grant__name">Grant #{row.index + 1}</span>},
     {Header: 'Funding', accessor: 'funding', Cell: row => <CreatableSelect onCreateOption={value => handleSelectCreate(row.index, value)} onChange={value => handleSelectChange(row.index, value)} value={row.value} isMulti placeholder="Enter unique donation amounts and hit enter" />},
+    {Header: 'Funded amount', accessor: 'fundingAmount', Cell: row => <span className="grant__match">${row.value ? row.value.toFixed(2) : 0}</span>},
     {Header: 'Match amount', accessor: 'match', Cell: row => <span className="grant__match">${row.value ? row.value.toFixed(2) : 0}</span>}
   ];
 
@@ -87,7 +88,7 @@ export default function Home() {
       </Head>
       <div className="header">
         <a href="https://gitcoin.co" target="_blank" rel="noopener noreferrer">
-          <img src="/logo.png" alt="QF.WTF logo" />
+          <img src="https://s.gitcoin.co/static/v2/images/logo_med_hover.c2969168bf04.gif" alt="QF.WTF logo" />
         </a>
       </div>
       <div className="subheader">
@@ -197,14 +198,19 @@ export default function Home() {
         flex: none !important;
       }
       .rt-tr > .rt-th:nth-of-type(3), .rt-tr > .rt-td:nth-of-type(3) {
-        width: calc(100% - 320px) !important;
+        width: calc(100% - 470px) !important;
         flex: none !important;
       }
       .rt-tr > .rt-td:nth-of-type(3) > div {
         width: 95%;
         margin-top: 10px;
+        margin-bottom: 10px;
       }
       .rt-tr > .rt-th:nth-of-type(4), .rt-tr > .rt-td:nth-of-type(4) {
+        width: 150px !important;
+        flex: none !important;
+      }
+      .rt-tr > .rt-th:nth-of-type(5), .rt-tr > .rt-td:nth-of-type(5) {
         width: 150px !important;
         flex: none !important;
       }
@@ -352,7 +358,8 @@ export default function Home() {
       }
       @media screen and (max-width: 800px) {
         .half-box {
-          width: calc(100% - 40px) !important;
+          width: calc(100% - 20px) !important;
+          margin: 10px 0px !important;
         }
         .content__center {
           justify-content: none;
