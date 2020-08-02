@@ -10,6 +10,7 @@
   "dependencies": {
     "next": "9.5.0",
     "react": "16.13.1",
+    "react-countup": "^4.3.3",
     "react-dom": "16.13.1",
     "react-table-6": "^6.11.0",
     "react-tagsinput": "^3.19.0",

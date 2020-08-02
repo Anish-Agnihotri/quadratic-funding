@@ -2,6 +2,7 @@ import Head from 'next/head' // HTML head
 import ReactTable from 'react-table-6' // React table for QF calculator
 import { useState, useEffect } from 'react';
 import TagsInput from 'react-tagsinput'; // Tags input for funding amounts
+import CountUp from 'react-countup'; // React countup for QF impact
 
 export default function Home() {
   const [match, setMatch] = useState(1000); // Setup default match amount
@@ -87,7 +88,7 @@ export default function Home() {
 
       <Head>
         <title>Quadratic Funding | Calculator</title>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
         <link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
@@ -150,6 +151,33 @@ export default function Home() {
               sortable={false}
             />
             <button onClick={addGrant} className="add__grant">Add Grant</button>
+          </div>
+        </div>
+      </div>
+
+      <div className="counter">
+        <span>Quadratic Funding Impact</span>
+        <h1><CountUp end={2338000} duration={5} prefix={"$"} separator={","} /></h1>
+        <span>has been distributed via projects like:</span>
+        <div>
+          <div>
+            <a href="https://gitcoin.co/grants" target="_blank" rel="noopener noreferrer">
+              <img src="/grants_logo.png" alt="Gitcoin Grants logo" />
+            </a>
+            <h3>Gitcoin Grants</h3>
+            <span>$2,300,000</span>
+          </div>
+          <div>
+            <a href="https://downtownstimulus.com/" target="_blank" rel="noopener noreferrer">
+              <img src="/downtown_stimulus_logo.png" alt="Downtown Stimulus logo" />
+            </a>
+            <h3>Downtown Stimulus</h3>
+            <span>$38,000</span>
+          </div>
+          <div>
+            <img src="/plus.png" alt="Add icon" />
+            <h3>Add your project</h3>
+            <a href="mailto:founders@gitcoin.co">Email Gitcoin</a>
           </div>
         </div>
       </div>
@@ -442,9 +470,69 @@ export default function Home() {
       .add_grant:focus {
         outline: none;
       }
+      .counter {
+        background-color: #F6F9FC;
+        width: 100%;
+        padding: 30px 0px 50px 0px;
+        text-align: center;
+      }
+      .counter > span {
+        display: block;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: #0F0857;
+      }
+      .counter > h1 {
+        background-color: #ff1c48;
+        background-image: linear-gradient(180deg, #ff1c48 0%, #ff6132 100%);
+        display: inline-block;
+        color: #fff;
+        font-size: 80px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-block-start: 15px;
+        margin-block-end: 15px;
+      }
+      .counter > div {
+        padding: 30px 0px 10px 0px;
+      }
+      .counter > div > div {
+        display: inline-block;
+        margin: 20px;
+        width: 300px;
+      }
+      .counter > div > div:nth-child(1) > a, .counter > div > div:nth-child(2) > a {
+        border-bottom: none;
+      }
+      .counter > div > div:nth-child(1) > a > img {
+        width: 250px;
+      }
+      .counter > div > div:nth-child(2) > a > img {
+        width: 80px;
+      }
+      .counter > div > div:nth-child(3) > img {
+        width: 150px;
+      }
+      .counter > div > div > h3 {
+        font-size: 22px;
+        margin-block-end: 5px;
+      }
+      .counter > div > div > span {
+        font-size: 18px;
+      }
+      .counter > div > div > a {
+        font-size: 18px;
+        text-decoration: none;
+        color: #000;
+        border-bottom: 1px solid #00e996;
+        transition: 50ms ease-in-out;
+      }
+      .counter > div > div > a:hover {
+        opacity: 0.7;
+      }
       .subfooter {
         height: auto;
-        border-top: 2px solid #00e996;
+        border-top: 2px solid ##6D1DA1;
         width: calc(100% - 40px);
         padding: 50px 20px 30px 20px;
         background-color: #070C16;
@@ -520,6 +608,12 @@ export default function Home() {
       @media screen and (max-width: 600px) {
         .subfooter > div > img {
           width: 90% !important;
+        }
+        .counter > h1 {
+          font-size: 30px;
+        }
+        .counter > div > div {
+          width: calc(100% - 40px);
         }
       }
       @media screen and (max-width: 1050px) {
