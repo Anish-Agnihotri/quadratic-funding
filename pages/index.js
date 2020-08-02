@@ -1,7 +1,7 @@
 import Head from 'next/head' // HTML head
 import ReactTable from 'react-table-6' // React table for QF calculator
-import { useState, useEffect } from 'react'
-import { CreatableSelect } from '@atlaskit/select'; // Select field for calculator
+import { useState, useEffect } from 'react';
+import TagsInput from 'react-tagsinput'; // Tags input for funding amounts
 
 export default function Home() {
   const [match, setMatch] = useState(1000); // Setup default match amount
@@ -33,32 +33,6 @@ export default function Home() {
     setData(data => [...data, {funding: [], fundingAmount: 0, match: 0}]);
   };
 
-  // Handle change in grant contribution field
-  const handleSelectChange = (grant_number, value) => {
-    let newData = data; // Collect existing array
-    newData[grant_number].funding = value; // Setup funding amount by grant number
-
-    // Calculate total funding amount after change
-    let fundingAmount = 0;
-    // If funding amounts exist
-    if (newData[grant_number].funding && newData[grant_number].funding.length){
-      // Loop and add
-      for (let i = 0; i < newData[grant_number].funding.length; i++) {
-        fundingAmount += parseFloat(newData[grant_number].funding[i].value);
-      }
-    } else {
-      // Else, return empty array
-      newData[grant_number].funding = [];
-    }
-
-    // Set funding amount
-    newData[grant_number].fundingAmount = fundingAmount;
-    // Set data array with new data
-    setData([...newData]);
-    // Trigger match recalculation, FIXME: should be changed to occur with useEffect instead
-    calculateMatch();
-  };
-
   // Calculate match for each grant
   const calculateMatch = () => {
     let newData = data; // Collect data
@@ -70,7 +44,7 @@ export default function Home() {
 
       // Sum the square root of each grant contribution
       for (let j = 0; j < newData[i].funding.length; j++) {
-        sumAmount += Math.sqrt(newData[i].funding[j].value);
+        sumAmount += Math.sqrt(newData[i].funding[j]);
       }
 
       // Square the total value of each summed grants contributions
@@ -90,20 +64,20 @@ export default function Home() {
     setData([...newData]);
   };
 
-  // Handle new addition of grant amount
-  const handleSelectCreate = (grant_number, value) => {
-    let newData = data; // Collect data into variable
-    newData[grant_number].funding.push({label: value, value: value}); // Push new funding amount
-    newData[grant_number].fundingAmount += parseFloat(value); // Add new fundign amount to total fundingAmount
-    setData([...newData]); // Set new data
-    calculateMatch(); // Trigger match recalculation, FIXME: should be changed to occur with useEffect instead
+  // Change handler for tags input
+  const handleChange = (tags, grant_number) => {
+    let newData = data; // Collect data
+    newData[grant_number].funding = tags.map(x => parseFloat(x)); // Set array value
+    newData[grant_number].fundingAmount = newData[grant_number].funding.reduce((a, b) => a + b, 0); // Update funding amount
+    setData([...newData]); // Set data
+    calculateMatch(); // Recalculate match with new changes
   };
 
   // Calculator column format for react-table
   const columns = [
     {Header: "Remove", accessor: 'number', Cell: row => <button onClick={() => removeGrant(row.index)} className="close-button">X</button>},
     {Header: 'Grant', accessor: 'number', Cell: row => <span className="grant__name">Grant #{row.index + 1}</span>},
-    {Header: 'Funding', accessor: 'funding', Cell: row => <CreatableSelect onCreateOption={value => handleSelectCreate(row.index, value)} onChange={value => handleSelectChange(row.index, value)} value={row.value} isMulti placeholder="Enter unique donation amounts and hit enter" />},
+    {Header: 'Funding', accessor: 'funding', Cell: row => <TagsInput inputProps={{className: 'react-tagsinput-input', placeholder: 'Add a contribution'}} value={data[row.index].funding} onChange={tags => handleChange(tags, row.index)} />},
     {Header: 'Funded amount', accessor: 'fundingAmount', Cell: row => <span className="grant__match">${row.value ? row.value.toFixed(2) : 0}</span>},
     {Header: 'Match amount', accessor: 'match', Cell: row => <span className="grant__match">${row.value ? row.value.toFixed(2) : 0}</span>}
   ];
@@ -148,7 +122,8 @@ export default function Home() {
         <img src="/logo.gif" alt="Quadratic Funding logo" />
         <p>Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community.</p>
         <img src="/formula.gif" alt="Quadratic Funding formula" />
-        <p><a href="https://arxiv.org/pdf/1809.06421.pdf" target="_blank" rel="noopener noreferrer">Quadratic Funding Paper (PDF)</a> | Made with &lt;3 by <a href="https://twitter.com/_anishagnihotri" target="_blank" rel="noopener noreferrer">@_anishagnihotri</a> &amp; <a href="https://twitter.com/owocki" target="_blank" rel="noopener noreferrer">@owocki</a></p>
+        <p><a href="https://arxiv.org/pdf/1809.06421.pdf" target="_blank" rel="noopener noreferrer">Quadratic Funding Paper (PDF)</a> by <a href="https://twitter.com/glenweyl" target="_blank" rel="noopener noreferrer">@glenweyl</a> &amp; <a href="https://twitter.com/vitalikbuterin" target="_blank" rel="noopener noreferrer">@vitalikbuterin</a></p> 
+        <p>This calculator made with &lt;3 by <a href="https://twitter.com/_anishagnihotri" target="_blank" rel="noopener noreferrer">@_anishagnihotri</a> &amp; <a href="https://twitter.com/owocki" target="_blank" rel="noopener noreferrer">@owocki</a></p>
       </div>
 
       <div className="content">
@@ -181,20 +156,12 @@ export default function Home() {
 
       <div className="subfooter">
         <div className="content__center">
+          <h3>What if you could program support for public goods into your monetary system?</h3>
+          <p>Private goods incentive landscape + Public goods incentive landscape = </p>
+          <img src="/landscape.png" alt="Combined lanscapes" />
           <div>
-            <div><span>1</span></div>
-            <p>QF Short term landscape</p>
-            <img src="/landscape_short.png" alt="Short landscape" />
-          </div>
-          <div>
-            <div><span>2</span></div>
-            <p>QF Mid term landscape</p>
-            <img src="/landscape_mid.png" alt="Mid landscape" />
-          </div>
-          <div>
-            <div><span>3</span></div>
-            <p>QF Long term landscape</p>
-            <img src="/landscape_long.png" alt="Long landscape" />
+            <a href="https://vitalik.ca/general/2020/07/21/round6.html" target="_blank" rel="noopener noreferrer">Read more about experiments with QF</a>
+            <a href="https://gitcoin.co/grants" target="_blank" rel="noopener noreferrer">Play with Gitcoin Grants</a>
           </div>
         </div>
       </div>
@@ -254,7 +221,8 @@ export default function Home() {
         border-bottom-color: #e7eaf3!important;
       }
       .close-button {
-        background-color: #aa381e;
+        background-color: #ff1c48;
+        background-image: linear-gradient(180deg, #ff1c48 0%, #ff6132 100%);
         border-radius: 5px;
         border: none;
         color: #fff;
@@ -262,6 +230,7 @@ export default function Home() {
         transform: translate(11.5px, 17.5px);
         transition: 100ms ease-in-out;
         cursor: pointer;
+        font-weight: 700;
       }
       .close-button:hover {
         opacity: 0.7;
@@ -300,6 +269,16 @@ export default function Home() {
         width: 95%;
         margin-top: 10px;
         margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #e7eaf3;
+      }
+      .react-tagsinput-input {
+        width: 120px !important;
+      }
+      .react-tagsinput-tag {
+        background-color: #e7eaf3;
+        color: #000;
+        border-color: #bbc4dd;
       }
       .rt-tr > .rt-th:nth-of-type(4), .rt-tr > .rt-td:nth-of-type(4) {
         width: 150px !important;
@@ -359,6 +338,12 @@ export default function Home() {
         padding: 0px 20px;
         color: #fff;
       }
+      .subheader > p:nth-of-type(2) {
+        margin-top: 30px;
+      }
+      .subheader > p:nth-of-type(2), .subheader > p:nth-of-type(3) {
+        max-width: 600px;
+      }
       .subheader > p > a {
         color: #000;
         padding: 1px 3px;
@@ -374,7 +359,7 @@ export default function Home() {
       .content {
         background-color: #F6F9FC;
         width: 100%;
-        padding: 20px 0px;
+        padding: 30px 0px;
       }
       .content__center {
         width: 1000px;
@@ -443,15 +428,16 @@ export default function Home() {
         padding: 10px 15px;
         font-size: 18px;
         font-weight: 400;
-        color: #fff;
+        color: #000;
+        font-weight: bold;
         border: none;
         border-radius: 5px;
-        background-color: #00A652;
+        background-color: #00EC93;
         transition: 100ms ease-in-out;
         cursor: pointer;
       }
       .add__grant:hover {
-        background-color: #008040; 
+        background-color: #00cc7e; 
       }
       .add_grant:focus {
         outline: none;
@@ -461,34 +447,38 @@ export default function Home() {
         border-top: 2px solid #00e996;
         width: calc(100% - 40px);
         padding: 50px 20px 30px 20px;
-        background-color: #090D10;
+        background-color: #070C16;
         color: #fff;
       }
       .subfooter > div {
         padding: 0px;
       }
+      .subfooter > div > h3 {
+        font-size: 23px;
+        margin-block-start: 0px;
+        color: #00e996;
+      }
+      .subfooter > div > img {
+        max-width: 500px;
+        margin-top: 10px;
+      }
       .subfooter > div > div {
-        display: inline-block;
-        width: 280px;
-        padding: 0px 10px;
-        text-align: center;
-        vertical-align: top;
+        display: block;
+        padding: 40px 0px 20px 0px;
+      }
+      .subfooter > div > div > a {
         margin: 10px;
-      }
-      .subfooter > div > div > div {
-        background-color: #00A652;
+        padding: 7px 15px;
+        border-radius: 2px;
+        font-size: 18px;
+        text-decoration: none;
         display: inline-block;
-        height: 30px;
-        width: 30px;
-        border-radius: 50%;
+        color: #fff;
+        background-color: #980572;
+        transition: 50ms ease-in-out;
       }
-      .subfooter > div > div > div > span {
-        display: inline-block;
-        transform: translateY(5px);
-      }
-      .subfooter > div > div > img {
-        width: 100%;
-        vertical-align: top;
+      .subfooter > div > div > a:hover {
+        opacity: 0.85;
       }
       .footer {
         height: 150px;
@@ -526,6 +516,11 @@ export default function Home() {
       .footer > div > a > img {
         height: 35px;
         filter: invert(100%);
+      }
+      @media screen and (max-width: 600px) {
+        .subfooter > div > img {
+          width: 90% !important;
+        }
       }
       @media screen and (max-width: 1050px) {
         .content__center {
