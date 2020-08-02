@@ -92,9 +92,10 @@ export default function Home() {
         </a>
       </div>
       <div className="subheader">
-        <h1>Quadratic Funding</h1>
-        <p>Quadratic Funding proposes a mechanism of quadratic voting to fund public goods. <a href="https://gitcoin.co" target="_blank" rel="noopener noreferrer">Gitcoin</a> hosts crowdfund matching rounds built atop Quadratic Funding that help fund grants supporting Ethereum research, infrastructure, and resources in general as a public good.</p>
-        <p>Below is a simple calculator to illustrate Quadratic Funding in action.</p>
+        <img src="/logo.gif" alt="Quadratic Funding logo" />
+        <p>Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community.</p>
+        <img src="/formula.gif" alt="Quadratic Funding formula" />
+        <p><a href="https://arxiv.org/pdf/1809.06421.pdf" target="_blank" rel="noopener noreferrer">Quadratic Funding Paper (PDF)</a> | Made with &lt;3 by <a href="https://twitter.com/_anishagnihotri" target="_blank" rel="noopener noreferrer">@_anishagnihotri</a> &amp; <a href="https://twitter.com/owocki" target="_blank" rel="noopener noreferrer">@owocki</a></p>
       </div>
       <div className="content">
         <div className="content__center">
@@ -168,7 +169,7 @@ export default function Home() {
         border: none;
         color: #fff;
         padding: 5px 10px;
-        transform: translate(8px, 17.5px);
+        transform: translate(11.5px, 17.5px);
         transition: 100ms ease-in-out;
       }
       .close-button:hover {
@@ -188,6 +189,9 @@ export default function Home() {
         font-size: 22px;
         line-height: 60px;
         padding-left: 10px;
+      }
+      .rt-tbody, .rt-thead {
+        min-width: 770px !important;
       }
       .rt-tr > .rt-th:nth-of-type(1), .rt-tr > .rt-td:nth-of-type(1) {
         width: 70px !important;
@@ -222,7 +226,6 @@ export default function Home() {
       .header {
         height: 65px;
         box-shadow: 0 2px 10px rgba(151,164,175,.1);
-        border-bottom: 2px solid #ccc;
         padding: 0px 20px;
         width: calc(100% - 40px);
         background-image: url('/header-bg.png');
@@ -241,31 +244,35 @@ export default function Home() {
       }
       .subheader {
         text-align: center;
-        background-color: #F2F6F9;
+        background-image: url('/subheader-bg.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
         min-height: 200px;
         padding: 20px 0px;
         box-shadow: inset 0 3px 8px rgba(151,164,175,.05);
         border-bottom: 1px solid #e7eaf3;
       }
-      .subheader > h1 {
-        margin: 0px;
-        background-color: #3E00FF;
-        display: inline-block;
-        padding: 7.5px 15px;
-        border-radius: 5px;
-        color: #fff;
+      .subheader > img:nth-of-type(1) {
+        height: 150px;
+      }
+      .subheader > img:nth-of-type(2) {
+        height: 50px;
       }
       .subheader > p {
-        max-width: 700px;
+        max-width: 450px;
         display: block;
         margin-block-start: 0px;
         line-height: 25px;
         margin: 15px auto;
         padding: 0px 20px;
+        color: #fff;
       }
       .subheader > p > a {
         color: #000;
-        border-bottom: 1px solid #00e996;
+        padding: 1px 3px;
+        background-color: #00e996;
+        border-radius: 2px;
         font-weight: 500;
         text-decoration: none;
         transition: 100ms ease-in-out;
@@ -274,9 +281,9 @@ export default function Home() {
         opacity: 0.75;
       }
       .content {
-        min-height: calc(100vh - 287px);
         background-color: #F6F9FC;
         width: 100%;
+        padding: 20px 0px;
       }
       .content__center {
         width: 1000px;
@@ -291,11 +298,16 @@ export default function Home() {
         height: 80px;
         display: inline-block;
         box-shadow: 0 0 35px rgba(127,150,174,.125);
-        width: calc(40% - 40px);
-        margin: 10px;
+        width: calc(50% - 29.5px);
         padding: 10px;
         vertical-align: top;
         text-align: left;
+      }
+      .half-box:nth-child(1) {
+        margin-right: 7.5px;
+      }
+      .half-box:nth-child(2) {
+        margin-left: 7.5px;
       }
       .half-box > h3, .table__view > div > h3 {
         margin: 5px;
