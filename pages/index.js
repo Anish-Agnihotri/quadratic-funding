@@ -87,7 +87,7 @@ export default function Home() {
     <div className="container">
 
       <Head>
-        <title>Quadratic Funding | Calculator</title>
+        <title>WTF is Quadratic Funding?</title>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
         <link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
@@ -100,17 +100,27 @@ export default function Home() {
         <meta name="theme-color" content="#0f0857" />
         <meta name="description" content="Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community." />
         <meta property="og:type" content="website" />
-        <meta name="og:title" property="og:title" content="Quadratic Funding | Calculator" />
+        <meta name="og:title" property="og:title" content="WTF is Quadratic Funding?" />
         <meta name="og:description" property="og:description" content="Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community." />
         <meta property="og:site_name" content="QF.Gitcoin.co" />
         <meta property="og:url" content="https://qf.gitcoin.co/" />  
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Quadratic Funding | Calculator" />
+        <meta name="twitter:title" content="WTF is Quadratic Funding?" />
         <meta name="twitter:description" content="Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community." />
         <meta name="twitter:site" content="https://qf.gitcoin.co/" />
         <meta name="twitter:creator" content="https://twitter.com/_anishagnihotri" />
         <meta property="og:image" content="https://qf.gitcoin.co/metaimage.png" />
         <meta name="twitter:image" content="https://qf.gitcoin.co/metaimage.png" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-102304388-4"></script>
+        <script dangerouslySetInnerHTML={
+          { __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){window.dataLayer.push(arguments)}
+              gtag("js", new Date());
+              gtag("config", "UA-102304388-4");
+          `}
+        }>
+        </script>
       </Head>
 
       <div className="header">
@@ -120,15 +130,28 @@ export default function Home() {
       </div>
 
       <div className="subheader">
+        <h2>WTF IS</h2>
         <img src="/logo.gif" alt="Quadratic Funding logo" />
         <p>Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community.</p>
         <img src="/formula.gif" alt="Quadratic Funding formula" />
         <p><a href="https://arxiv.org/pdf/1809.06421.pdf" target="_blank" rel="noopener noreferrer">Quadratic Funding Paper (PDF)</a> by <a href="https://twitter.com/glenweyl" target="_blank" rel="noopener noreferrer">@glenweyl</a> &amp; <a href="https://twitter.com/vitalikbuterin" target="_blank" rel="noopener noreferrer">@vitalikbuterin</a></p> 
         <p>This calculator made with &lt;3 by <a href="https://twitter.com/_anishagnihotri" target="_blank" rel="noopener noreferrer">@_anishagnihotri</a> &amp; <a href="https://twitter.com/owocki" target="_blank" rel="noopener noreferrer">@owocki</a></p>
+        <p>Design by <a href="http://gitcoin.co/guistf" target="_blank" rel="noopener noreferrer">@guistf</a> &amp; <a href="http://gitcoin.co/octavian" target="_blank" rel="noopener noreferrer">@octavian</a></p>
       </div>
 
       <div className="content">
-        <div className="content__center">
+        <div className="content__title">
+          <h1>The secret behind QF</h1>
+          <h2>It's the math&trade;</h2>
+          <p>A matching pool is raised, and then a crowdfund campaign is matched according to the QF algorithm:</p>
+          <ul>
+            <li><span><i>Number of contributors</i> matters more than <i>amount funded</i>.</span></li>
+            <li><span>This pushes power to the edges, away from whales &amp; other central power brokers.</span></li>
+            <li><span>This creates more democracy in public goods funding decisions! 🦄</span></li>
+          </ul>
+          <p>👇 Want to see the math in action? Use the calculator below! 👇</p>
+        </div>
+        <div className="content__center main__calculator">
           <div className="half-box content__center__qfamount">
             <h3>Match Amount</h3>
             <input type="number" min="0" value={match} onChange={e => setMatch(e.target.value)} placeholder="Enter $ funding match amount" />
@@ -184,8 +207,8 @@ export default function Home() {
 
       <div className="subfooter">
         <div className="content__center">
-          <h3>What if you could program support for public goods into your monetary system?</h3>
-          <p>Private goods incentive landscape + Public goods incentive landscape = </p>
+          <h3>What if you could program support for public goods into your community?</h3>
+          <p>Our goal is to align incentives between private goods &amp; public goods.</p>
           <img src="/landscape.png" alt="Combined lanscapes" />
           <div>
             <a href="https://vitalik.ca/general/2020/07/21/round6.html" target="_blank" rel="noopener noreferrer">Read more about experiments with QF</a>
@@ -351,6 +374,13 @@ export default function Home() {
         box-shadow: inset 0 3px 8px rgba(151,164,175,.05);
         border-bottom: 1px solid #e7eaf3;
       }
+      .subheader > h2 {
+        color: #00EC93;
+        font-size: 50px;
+        margin-block-start: -22.5px;
+        margin-block-end: 0px;
+        transform: translateY(22.5px);
+      }
       .subheader > img:nth-of-type(1) {
         height: 150px;
       }
@@ -388,6 +418,48 @@ export default function Home() {
         background-color: #F6F9FC;
         width: 100%;
         padding: 30px 0px;
+      }
+      .content__title {
+        width: 100%;
+        text-align: center;
+      }
+      .content__title > h1 {
+        font-size: 40px;
+        margin-block-end: 0px;
+        color: #0F0857;
+      }
+      .content__title > h2 {
+        margin-block-start: 0px;
+        color: #00D182;
+      }
+      .content__title > p {
+        font-size: 18px;
+        line-height: 27px;
+        color: rgb(107,114,128);
+        max-width: 600px;
+        margin: 0px auto;
+      }
+      .content__title > ul {
+        list-style-type: none;
+        padding: 0px;
+        max-width: 600px;
+        display: inline-block;
+        width: 0 auto;
+      }
+      .content__title > ul > li {
+        background-color: #fff;
+        display: inline-block;
+        width: 580px;
+        padding: 10px 10px;
+        border-radius: 5px;
+        margin: 5px 0px;
+        text-align: left;
+        border: 1px solid #e7eaf3;
+        text-align: center;
+      }
+      .main__calculator {
+        padding-top: 55px !important;
+        padding-bottom: 42.5px !important;
       }
       .content__center {
         width: 1000px;
@@ -471,9 +543,9 @@ export default function Home() {
         outline: none;
       }
       .counter {
-        background-color: #F6F9FC;
+        background-color: #ebf1f9;
         width: 100%;
-        padding: 30px 0px 50px 0px;
+        padding: 50px 0px 30px 0px;
         text-align: center;
       }
       .counter > span {
@@ -532,7 +604,7 @@ export default function Home() {
       }
       .subfooter {
         height: auto;
-        border-top: 2px solid ##6D1DA1;
+        border-top: 2px solid #6D1DA1;
         width: calc(100% - 40px);
         padding: 50px 20px 30px 20px;
         background-color: #070C16;
@@ -614,6 +686,9 @@ export default function Home() {
         }
         .counter > div > div {
           width: calc(100% - 40px);
+        }
+        .content__title > ul > li {
+          width: 85%;
         }
       }
       @media screen and (max-width: 1050px) {
