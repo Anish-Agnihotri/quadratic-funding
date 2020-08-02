@@ -86,7 +86,30 @@ export default function Home() {
   return (
     <div className="container">
       <Head>
+        <title>Quadratic Funding | Calculator</title>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+        <link rel="manifest" href="/favicons/site.webmanifest" />
+        <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#0f0857" />
+        <link rel="shortcut icon" href="/favicons/favicon.ico" />
+        <meta name="msapplication-TileColor" content="#0f0857" />
+        <meta name="msapplication-config" content="/favicons/browserconfig.xml" />
+        <meta name="theme-color" content="#0f0857" />
+        <meta name="description" content="Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community." />
+        <meta property="og:type" content="website" />
+        <meta name="og:title" property="og:title" content="Quadratic Funding | Calculator" />
+        <meta name="og:description" property="og:description" content="Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community." />
+        <meta property="og:site_name" content="Quadratic-Funding.Vercel.APP" />
+        <meta property="og:url" content="https://quadratic-funding.vercel.app/" />  
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Quadratic Funding | Calculator" />
+        <meta name="twitter:description" content="Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community." />
+        <meta name="twitter:site" content="https://quadratic-funding.vercel.app/" />
+        <meta name="twitter:creator" content="https://twitter.com/_anishagnihotri" />
+        <meta property="og:image" content="https://quadratic-funding.vercel.app/metaimage.png" />
+        <meta name="twitter:image" content="https://quadratic-funding.vercel.app/metaimage.png" />
       </Head>
       <div className="header">
         <a href="https://gitcoin.co" target="_blank" rel="noopener noreferrer">
