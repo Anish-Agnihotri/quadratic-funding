@@ -102,15 +102,15 @@ export default function Home() {
         <meta property="og:type" content="website" />
         <meta name="og:title" property="og:title" content="Quadratic Funding | Calculator" />
         <meta name="og:description" property="og:description" content="Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community." />
-        <meta property="og:site_name" content="Quadratic-Funding.Vercel.APP" />
-        <meta property="og:url" content="https://quadratic-funding.vercel.app/" />  
+        <meta property="og:site_name" content="QF.Gitcoin.co" />
+        <meta property="og:url" content="https://qf.gitcoin.co/" />  
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Quadratic Funding | Calculator" />
         <meta name="twitter:description" content="Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community." />
-        <meta name="twitter:site" content="https://quadratic-funding.vercel.app/" />
+        <meta name="twitter:site" content="https://qf.gitcoin.co/" />
         <meta name="twitter:creator" content="https://twitter.com/_anishagnihotri" />
-        <meta property="og:image" content="https://quadratic-funding.vercel.app/metaimage.png" />
-        <meta name="twitter:image" content="https://quadratic-funding.vercel.app/metaimage.png" />
+        <meta property="og:image" content="https://qf.gitcoin.co/metaimage.png" />
+        <meta name="twitter:image" content="https://qf.gitcoin.co/metaimage.png" />
       </Head>
 
       <div className="header">
