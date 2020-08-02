@@ -9,6 +9,8 @@ export default function Home() {
   const [data, setData] = useState([
     {funding: [], fundingAmount: 0, match: 0 },
     {funding: [], fundingAmount: 0, match: 0 },
+    {funding: [], fundingAmount: 0, match: 0 },
+    {funding: [], fundingAmount: 0, match: 0 },
   ]);
 
   useEffect(() => calculateMatch(), [match]);
@@ -118,16 +120,49 @@ export default function Home() {
               resizable={false}
               className="table -striped -highlight"
               minRows={0}
+              sortable={false}
             />
             <button onClick={addGrant} className="add__grant">Add Grant</button>
           </div>
+        </div>
+      </div>
+      <div className="subfooter">
+        <div className="content__center">
+          <div>
+            <div><span>1</span></div>
+            <p>QF Short term landscape</p>
+            <img src="/landscape_short.png" alt="Short landscape" />
+          </div>
+          <div>
+            <div><span>2</span></div>
+            <p>QF Mid term landscape</p>
+            <img src="/landscape_mid.png" alt="Mid landscape" />
+          </div>
+          <div>
+            <div><span>3</span></div>
+            <p>QF Long term landscape</p>
+            <img src="/landscape_long.png" alt="Long landscape" />
+          </div>
+        </div>
+      </div>
+      <div className="footer">
+        <a href="https://gitcoin.co" target="_blank" rel="noopener noreferrer">
+          <img src="https://s.gitcoin.co/static/v2/images/logo_med_hover.c2969168bf04.gif" alt="QF.WTF logo" />
+        </a>
+        <div>
+          <a href="https://github.com/anish-agnihotri/quadratic-funding" target="_blank" rel="noopener noreferrer">
+            <img src="/github.png" alt="GitHub logo" />
+          </a>
+          <a href="https://gitcoin.co/twitter" target="_blank" rel="noopener noreferrer">
+            <img src="/twitter.png" alt="Twitter logo" />
+          </a>
         </div>
       </div>
       <style jsx global>{`
       body {
         margin: 0px;
         padding: 0px;
-        background-color: #F6F9FC;
+        background-color: #0F0432;
         font-family: 'Roboto', sans-serif;
       }
       .table {
@@ -171,6 +206,7 @@ export default function Home() {
         padding: 5px 10px;
         transform: translate(11.5px, 17.5px);
         transition: 100ms ease-in-out;
+        cursor: pointer;
       }
       .close-button:hover {
         opacity: 0.7;
@@ -288,7 +324,8 @@ export default function Home() {
       .content__center {
         width: 1000px;
         margin: 0px auto;
-        padding-top: 20px;
+        padding-top: 25px;
+        padding-bottom: 25px;
         text-align: center;
       }
       .half-box {
@@ -335,7 +372,7 @@ export default function Home() {
         transform: translateY(-3.5px);
       }
       .table__view {
-        margin: 15px 0px 50px 0px;
+        margin: 15px 0px 0px 0px;
         background-color: #fff;
         border: 1px solid #e7eaf3;
         border-radius: 8px;
@@ -356,6 +393,7 @@ export default function Home() {
         border-radius: 5px;
         background-color: #00A652;
         transition: 100ms ease-in-out;
+        cursor: pointer;
       }
       .add__grant:hover {
         background-color: #008040; 
@@ -363,9 +401,83 @@ export default function Home() {
       .add_grant:focus {
         outline: none;
       }
+      .subfooter {
+        height: auto;
+        border-top: 2px solid #00e996;
+        width: calc(100% - 40px);
+        padding: 50px 20px 30px 20px;
+        background-color: #090D10;
+        color: #fff;
+      }
+      .subfooter > div {
+        padding: 0px;
+      }
+      .subfooter > div > div {
+        display: inline-block;
+        width: 280px;
+        padding: 0px 10px;
+        text-align: center;
+        vertical-align: top;
+        margin: 10px;
+      }
+      .subfooter > div > div > div {
+        background-color: #00A652;
+        display: inline-block;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+      }
+      .subfooter > div > div > div > span {
+        display: inline-block;
+        transform: translateY(5px);
+      }
+      .subfooter > div > div > img {
+        width: 100%;
+        vertical-align: top;
+      }
+      .footer {
+        height: 150px;
+        padding: 0px 20px;
+        width: calc(100% - 40px);
+        background-image: url('/header-bg.png');
+        background-position: center top;
+        text-align: center;
+      }
+      .footer > a {
+        transition: 50ms ease-in-out;
+      }
+      .footer > a:hover {
+        opacity: 0.7;
+      }
+      .footer > a > img {
+        height: 60px;
+        margin-top: 15px;
+      }
+      .footer > div {
+        display: block;
+        height: 40px;
+        padding: 10px 0px;
+      }
+      .footer > div > a {
+        margin: 0px 5px;
+        padding: 5px 10px 1px 10px;
+        border-radius: 5px;
+        display: inline-block;
+        transition: 50ms ease-in-out;
+      }
+      .footer > div > a:hover img {
+        opacity: 0.7;
+      }
+      .footer > div > a > img {
+        height: 35px;
+        filter: invert(100%);
+      }
       @media screen and (max-width: 1050px) {
         .content__center {
           width: 90%;
+        }
+        .subfooter > div > div > img {
+          max-width: 300px;
         }
       }
       @media screen and (max-width: 800px) {
