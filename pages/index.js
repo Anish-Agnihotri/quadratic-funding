@@ -1,11 +1,13 @@
-import Head from 'next/head'
-import ReactTable from 'react-table-6'
+import Head from 'next/head' // HTML head
+import ReactTable from 'react-table-6' // React table for QF calculator
 import { useState, useEffect } from 'react'
-import { CreatableSelect } from '@atlaskit/select';
+import { CreatableSelect } from '@atlaskit/select'; // Select field for calculator
 
 export default function Home() {
-  const [match, setMatch] = useState(1000);
-  const [deletion, setDeletion] = useState(true);
+  const [match, setMatch] = useState(1000); // Setup default match amount
+  const [deletion, setDeletion] = useState(true); // Setup deletion handler to trigger match
+  
+  // Funding calculator
   const [data, setData] = useState([
     {funding: [], fundingAmount: 0, match: 0 },
     {funding: [], fundingAmount: 0, match: 0 },
@@ -13,68 +15,91 @@ export default function Home() {
     {funding: [], fundingAmount: 0, match: 0 },
   ]);
 
+  // Event handlers to recalculate match on change
   useEffect(() => calculateMatch(), [match]);
   useEffect(() => calculateMatch(), [deletion]);
 
+  // Remove grant by grant_number
   const removeGrant = grant_number => {
+    // Filter array by index
     setData(data.length > 1 ? data.filter((v, index) => index !== grant_number) : []);
+    // Trigger event handler by toggling deletion state
     setDeletion(deletion => !deletion);
   };
 
+  // Add grant
   const addGrant = () => {
+    // Append new grant to data array
     setData(data => [...data, {funding: [], fundingAmount: 0, match: 0}]);
   };
 
+  // Handle change in grant contribution field
   const handleSelectChange = (grant_number, value) => {
-    let newData = data;
-    newData[grant_number].funding = value;
+    let newData = data; // Collect existing array
+    newData[grant_number].funding = value; // Setup funding amount by grant number
 
+    // Calculate total funding amount after change
     let fundingAmount = 0;
+    // If funding amounts exist
     if (newData[grant_number].funding && newData[grant_number].funding.length){
+      // Loop and add
       for (let i = 0; i < newData[grant_number].funding.length; i++) {
         fundingAmount += parseFloat(newData[grant_number].funding[i].value);
       }
     } else {
+      // Else, return empty array
       newData[grant_number].funding = [];
     }
 
+    // Set funding amount
     newData[grant_number].fundingAmount = fundingAmount;
+    // Set data array with new data
     setData([...newData]);
+    // Trigger match recalculation, FIXME: should be changed to occur with useEffect instead
     calculateMatch();
   };
 
+  // Calculate match for each grant
   const calculateMatch = () => {
-    let newData = data;
-    let summed = 0;
+    let newData = data; // Collect data
+    let summed = 0; // Setup summed grant contributions
 
+    // Loop over each grant
     for (let i = 0; i < newData.length; i++) {
       let sumAmount = 0;
 
+      // Sum the square root of each grant contribution
       for (let j = 0; j < newData[i].funding.length; j++) {
         sumAmount += Math.sqrt(newData[i].funding[j].value);
       }
 
+      // Square the total value of each summed grants contributions
       sumAmount *= sumAmount;
       newData[i].match = sumAmount;
       summed += sumAmount;
     }
 
+    // Setup a divisor based on available match
     let divisor = match/summed;
+    // Multiply matched values with divisor to get match amount in range of available funds
     for (let i = 0; i < newData.length; i++) {
       newData[i].match *= divisor;
     }
 
+    // Set new data
     setData([...newData]);
   };
 
+  // Handle new addition of grant amount
   const handleSelectCreate = (grant_number, value) => {
-    let newData = data;
-    newData[grant_number].funding.push({label: value, value: value});
-    newData[grant_number].fundingAmount += parseFloat(value);
-    setData([...newData]);
-    calculateMatch();
+    let newData = data; // Collect data into variable
+    newData[grant_number].funding.push({label: value, value: value}); // Push new funding amount
+    newData[grant_number].fundingAmount += parseFloat(value); // Add new fundign amount to total fundingAmount
+    setData([...newData]); // Set new data
+    calculateMatch(); // Trigger match recalculation, FIXME: should be changed to occur with useEffect instead
   };
 
+  // Calculator column format for react-table
   const columns = [
     {Header: "Remove", accessor: 'number', Cell: row => <button onClick={() => removeGrant(row.index)} className="close-button">X</button>},
     {Header: 'Grant', accessor: 'number', Cell: row => <span className="grant__name">Grant #{row.index + 1}</span>},
@@ -85,6 +110,7 @@ export default function Home() {
 
   return (
     <div className="container">
+
       <Head>
         <title>Quadratic Funding | Calculator</title>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
@@ -111,17 +137,20 @@ export default function Home() {
         <meta property="og:image" content="https://quadratic-funding.vercel.app/metaimage.png" />
         <meta name="twitter:image" content="https://quadratic-funding.vercel.app/metaimage.png" />
       </Head>
+
       <div className="header">
         <a href="https://gitcoin.co" target="_blank" rel="noopener noreferrer">
           <img src="https://s.gitcoin.co/static/v2/images/logo_med_hover.c2969168bf04.gif" alt="QF.WTF logo" />
         </a>
       </div>
+
       <div className="subheader">
         <img src="/logo.gif" alt="Quadratic Funding logo" />
         <p>Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community.</p>
         <img src="/formula.gif" alt="Quadratic Funding formula" />
         <p><a href="https://arxiv.org/pdf/1809.06421.pdf" target="_blank" rel="noopener noreferrer">Quadratic Funding Paper (PDF)</a> | Made with &lt;3 by <a href="https://twitter.com/_anishagnihotri" target="_blank" rel="noopener noreferrer">@_anishagnihotri</a> &amp; <a href="https://twitter.com/owocki" target="_blank" rel="noopener noreferrer">@owocki</a></p>
       </div>
+
       <div className="content">
         <div className="content__center">
           <div className="half-box content__center__qfamount">
@@ -149,6 +178,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+
       <div className="subfooter">
         <div className="content__center">
           <div>
@@ -168,6 +198,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+
       <div className="footer">
         <a href="https://gitcoin.co" target="_blank" rel="noopener noreferrer">
           <img src="https://s.gitcoin.co/static/v2/images/logo_med_hover.c2969168bf04.gif" alt="QF.WTF logo" />
@@ -180,6 +211,7 @@ export default function Home() {
             <img src="/twitter.png" alt="Twitter logo" />
           </a>
         </div>
+
       </div>
       <style jsx global>{`
       body {

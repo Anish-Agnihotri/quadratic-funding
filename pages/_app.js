@@ -4,4 +4,5 @@ function MyApp({ Component, pageProps }) {
     return <Component {...pageProps} />
 }
 
+// Default export to support .css import for react-table
 export default MyApp;
