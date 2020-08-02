@@ -1,19 +1,83 @@
 import Head from 'next/head'
 import ReactTable from 'react-table-6'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { CreatableSelect } from '@atlaskit/select';
 
 export default function Home() {
+  const [match, setMatch] = useState(1000);
+  const [deletion, setDeletion] = useState(true);
   const [data, setData] = useState([
-    {number: 1, funding: 100, match: 100 },
-    {number: 2, funding: 100, match: 100 },
+    {funding: [], fundingAmount: 0, match: 0 },
+    {funding: [], fundingAmount: 0, match: 0 },
   ]);
 
+  useEffect(() => calculateMatch(), [match]);
+  useEffect(() => calculateMatch(), [deletion]);
+
+  const removeGrant = grant_number => {
+    setData(data.length > 1 ? data.filter((v, index) => index !== grant_number) : []);
+    setDeletion(deletion => !deletion);
+  };
+
+  const addGrant = () => {
+    setData(data => [...data, {funding: [], fundingAmount: 0, match: 0}]);
+  };
+
+  const handleSelectChange = (grant_number, value) => {
+    let newData = data;
+    newData[grant_number].funding = value;
+
+    let fundingAmount = 0;
+    if (newData[grant_number].funding && newData[grant_number].funding.length){
+      for (let i = 0; i < newData[grant_number].funding.length; i++) {
+        fundingAmount += parseFloat(newData[grant_number].funding[i].value);
+      }
+    } else {
+      newData[grant_number].funding = [];
+    }
+
+    newData[grant_number].fundingAmount = fundingAmount;
+    setData([...newData]);
+    calculateMatch();
+  };
+
+  const calculateMatch = () => {
+    let newData = data;
+    let summed = 0;
+
+    for (let i = 0; i < newData.length; i++) {
+      let sumAmount = 0;
+
+      for (let j = 0; j < newData[i].funding.length; j++) {
+        sumAmount += Math.sqrt(newData[i].funding[j].value);
+      }
+
+      sumAmount *= sumAmount;
+      newData[i].match = sumAmount;
+      summed += sumAmount;
+    }
+
+    let divisor = match/summed;
+    for (let i = 0; i < newData.length; i++) {
+      newData[i].match *= divisor;
+    }
+
+    setData([...newData]);
+  };
+
+  const handleSelectCreate = (grant_number, value) => {
+    let newData = data;
+    newData[grant_number].funding.push({label: value, value: value});
+    newData[grant_number].fundingAmount += parseFloat(value);
+    setData([...newData]);
+    calculateMatch();
+  };
+
   const columns = [
-    {Header: "Remove", accessor: 'number', Cell: row => <button className="close-button">X</button>},
-    {Header: 'Grant', accessor: 'number', Cell: row => <span className="grant__name">Grant #{row.value}</span>},
-    {Header: 'Funding', accessor: 'funding', Cell: row => <CreatableSelect isMulti placeholder="Enter various donation amounts and hit enter" />},
-    {Header: 'Match amount', accessor: 'match', Cell: row => <span className="grant__match">${row.value}</span>}
+    {Header: "Remove", accessor: 'number', Cell: row => <button onClick={() => removeGrant(row.index)} className="close-button">X</button>},
+    {Header: 'Grant', accessor: 'number', Cell: row => <span className="grant__name">Grant #{row.index + 1}</span>},
+    {Header: 'Funding', accessor: 'funding', Cell: row => <CreatableSelect onCreateOption={value => handleSelectCreate(row.index, value)} onChange={value => handleSelectChange(row.index, value)} value={row.value} isMulti placeholder="Enter unique donation amounts and hit enter" />},
+    {Header: 'Match amount', accessor: 'match', Cell: row => <span className="grant__match">${row.value ? row.value.toFixed(2) : 0}</span>}
   ];
 
   return (
@@ -35,7 +99,7 @@ export default function Home() {
         <div className="content__center">
           <div className="half-box content__center__qfamount">
             <h3>Match Amount</h3>
-            <input type="number" min="0" placeholder="Enter $ funding match amount" />
+            <input type="number" min="0" value={match} onChange={e => setMatch(e.target.value)} placeholder="Enter $ funding match amount" />
           </div>
           <div className="half-box content__center__projectnum">
             <h3>Number of projects</h3>
@@ -53,7 +117,7 @@ export default function Home() {
               className="table -striped -highlight"
               minRows={0}
             />
-            <button className="add__grant">Add Grant</button>
+            <button onClick={addGrant} className="add__grant">Add Grant</button>
           </div>
         </div>
       </div>
