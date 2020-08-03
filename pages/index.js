@@ -78,7 +78,7 @@ export default function Home() {
   const columns = [
     {Header: "Remove", accessor: 'number', Cell: row => <button onClick={() => removeGrant(row.index)} className="close-button">X</button>},
     {Header: 'Grant', accessor: 'number', Cell: row => <span className="grant__name">Grant #{row.index + 1}</span>},
-    {Header: 'Funding', accessor: 'funding', Cell: row => <TagsInput inputProps={{className: 'react-tagsinput-input', placeholder: 'Add a contribution'}} value={data[row.index].funding} onChange={tags => handleChange(tags, row.index)} />},
+    {Header: 'Funding', accessor: 'funding', Cell: row => <TagsInput inputProps={{className: 'react-tagsinput-input', placeholder: 'Add a contribution and press Enter'}} value={data[row.index].funding} onChange={tags => handleChange(tags, row.index)} />},
     {Header: 'Funded amount', accessor: 'fundingAmount', Cell: row => <span className="grant__match">${row.value ? row.value.toFixed(2) : 0}</span>},
     {Header: 'Match amount', accessor: 'match', Cell: row => <span className="grant__match">${row.value ? row.value.toFixed(2) : 0}</span>}
   ];
@@ -205,6 +205,19 @@ export default function Home() {
         </div>
       </div>
 
+      <div className="public__goods">
+        <h1>Using Markets to create impact</h1>
+        <h2>Public goods are good.</h2>
+        <img src="/public_good_grid.png" alt="Public goods versus private goods matrix" />
+      </div>
+
+      <div className="free__rider">
+        <h1>Our secret to getting past the "free rider problem"</h1>
+        <h2>Up to 100x matching multipliers on $1 crowdfund contributions</h2>
+        <p>When a project gets popular enough, some pretty amazing matching multiples can be offered. This reinforces the incentive structure of QF as a fundamentally-democratic institution.</p>
+        <img src="/slider.gif" alt="QF contribution Slider" />
+      </div>
+
       <div className="subfooter">
         <div className="content__center">
           <h3>What if you could program support for public goods into your community?</h3>
@@ -324,7 +337,7 @@ export default function Home() {
         border: 1px solid #e7eaf3;
       }
       .react-tagsinput-input {
-        width: 120px !important;
+        width: 220px !important;
       }
       .react-tagsinput-tag {
         background-color: #e7eaf3;
@@ -397,7 +410,7 @@ export default function Home() {
         color: #fff;
       }
       .subheader > p:nth-of-type(2) {
-        margin-top: 30px;
+        margin-top: 40px;
       }
       .subheader > p:nth-of-type(2), .subheader > p:nth-of-type(3) {
         max-width: 600px;
@@ -423,16 +436,16 @@ export default function Home() {
         width: 100%;
         text-align: center;
       }
-      .content__title > h1 {
+      .content__title > h1, .public__goods > h1 {
         font-size: 40px;
         margin-block-end: 0px;
         color: #0F0857;
       }
-      .content__title > h2 {
+      .content__title > h2, .public__goods > h2 {
         margin-block-start: 0px;
         color: #00D182;
       }
-      .content__title > p {
+      .content__title > p, .free__rider > p {
         font-size: 18px;
         line-height: 27px;
         color: rgb(107,114,128);
@@ -545,8 +558,10 @@ export default function Home() {
       .counter {
         background-color: #ebf1f9;
         width: 100%;
-        padding: 50px 0px 30px 0px;
+        padding: 50px 0px 15px 0px;
         text-align: center;
+        border-top: 1px solid #e7eaf3;
+        border-bottom: 1px solid #e7eaf3;
       }
       .counter > span {
         display: block;
@@ -601,6 +616,39 @@ export default function Home() {
       }
       .counter > div > div > a:hover {
         opacity: 0.7;
+      }
+      .public__goods {
+        background-color: #F6F9FC;
+        text-align: center;
+        padding: 20px 20px 35px 20px;
+        width: calc(100% - 40px);
+      }
+      .public__goods > img {
+        max-width: 600px;
+        width: 90%;
+      }
+      .free__rider {
+        padding: 20px 20px 45px 20px;
+        width: calc(100% - 40px);
+        text-align: center;
+        background-color: #ebf1f9;
+        border-top: 1px solid #e7eaf3;
+      }
+      .free__rider > h1 {
+        font-size: 30px;
+        margin-block-end: 0px;
+        color: #0F0857;
+      }
+      .free__rider > h2 {
+        font-size: 22px;
+        margin-block-start: 0px;
+        color: #00D182;
+      }
+      .free__rider > img {
+        max-width: 600px;
+        width: 90%;
+        margin-top: 25px;
+        border-radius: 10px;
       }
       .subfooter {
         height: auto;
@@ -689,6 +737,9 @@ export default function Home() {
         }
         .content__title > ul > li {
           width: 85%;
+        }
+        .content__title > p {
+          width: 90%;
         }
       }
       @media screen and (max-width: 1050px) {
