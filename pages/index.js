@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 import TagsInput from 'react-tagsinput'; // Tags input for funding amounts
 import CountUp from 'react-countup'; // React countup for QF impact
 
-export default function Home() {
+const Home = ({ query }) => {
   const [match, setMatch] = useState(1000); // Setup default match amount
   const [deletion, setDeletion] = useState(true); // Setup deletion handler to trigger match
-  
+
   // Funding calculator
   const [data, setData] = useState([
     {funding: [], fundingAmount: 0, match: 0 },
@@ -19,6 +19,32 @@ export default function Home() {
   // Event handlers to recalculate match on change
   useEffect(() => calculateMatch(), [match]);
   useEffect(() => calculateMatch(), [deletion]);
+  useEffect(() => calculateMatch(), data);
+
+  // Event handler to autofill table on load with URL params
+  useEffect(() => {
+    // Check for match amount in param
+    if (query.match && query.match !== '') {
+      // If match amount is present, set match
+      setMatch(parseFloat(query.match));
+    }
+    // Check for grants array in param
+    if (query.grant) {
+      let newData = []; // Initialize temp variable
+
+      // Loop over grants array
+      for (let i = 0; i < query.grant.length; i++) {
+        // Push new grant data to temp variable
+        newData.push({
+          funding: query.grant[i] === '' ? [] : query.grant[i].split(",").map(Number),
+          fundingAmount: query.grant[i] === '' ? 0 : query.grant[i].split(",").map(Number).reduce((a, b) => a + b, 0),
+          match: 0
+        })
+      }
+
+      setData(newData); // Assign temp variable to data
+    }
+  }, []);
 
   // Remove grant by grant_number
   const removeGrant = grant_number => {
@@ -38,13 +64,16 @@ export default function Home() {
   const calculateMatch = () => {
     let newData = data; // Collect data
     let summed = 0; // Setup summed grant contributions
+    let urlParams = '?';
 
     // Loop over each grant
     for (let i = 0; i < newData.length; i++) {
       let sumAmount = 0;
+      urlParams += i == 0 ? 'grant=' : '&grant=';
 
       // Sum the square root of each grant contribution
       for (let j = 0; j < newData[i].funding.length; j++) {
+        urlParams += j == 0 ? newData[i].funding[j] : ',' + newData[i].funding[j];
         sumAmount += Math.sqrt(newData[i].funding[j]);
       }
 
@@ -54,12 +83,17 @@ export default function Home() {
       summed += sumAmount;
     }
 
+    urlParams += `&match=${match}`
+
     // Setup a divisor based on available match
     let divisor = match/summed;
     // Multiply matched values with divisor to get match amount in range of available funds
     for (let i = 0; i < newData.length; i++) {
       newData[i].match *= divisor;
     }
+
+    // Set url parameters
+    history.pushState({}, null, urlParams);
 
     // Set new data
     setData([...newData]);
@@ -198,11 +232,15 @@ export default function Home() {
             <span>$38,000</span>
           </div>
           <div>
-            <img src="/plus.png" alt="Add icon" />
-            <h3>Add your project</h3>
-            <a href="mailto:founders@gitcoin.co">Email Gitcoin</a>
+            <a href="https://clr.fund/" target="_blank" rel="noopener noreferrer">
+              <img src="/clrfund.png" alt="clr.fund" />
+            </a>
+            <h3>clr.fund</h3>
+            <span>Coming soon</span>
           </div>
         </div>
+        <a href="mailto:founders@gitcoin.co">Email Gitcoin to add your project</a>
+        <p>Reference implementations: <a href="https://github.com/gitcoinco/quadratic-funding">Python</a>, <a href="https://github.com/anish-agnihotri/quadratic-funding">JavaScript</a>, or <a href="mailto:founders@gitcoin.co">add your own</a>.</p>
       </div>
 
       <div className="public__goods">
@@ -558,7 +596,7 @@ export default function Home() {
       .counter {
         background-color: #ebf1f9;
         width: 100%;
-        padding: 50px 0px 15px 0px;
+        padding: 50px 0px 35px 0px;
         text-align: center;
         border-top: 1px solid #e7eaf3;
         border-bottom: 1px solid #e7eaf3;
@@ -581,7 +619,7 @@ export default function Home() {
         margin-block-end: 15px;
       }
       .counter > div {
-        padding: 30px 0px 10px 0px;
+        padding: 30px 0px 30px 0px;
       }
       .counter > div > div {
         display: inline-block;
@@ -597,8 +635,8 @@ export default function Home() {
       .counter > div > div:nth-child(2) > a > img {
         width: 80px;
       }
-      .counter > div > div:nth-child(3) > img {
-        width: 150px;
+      .counter > div > div:nth-child(3) > a > img {
+        width: 90px;
       }
       .counter > div > div > h3 {
         font-size: 22px;
@@ -607,15 +645,18 @@ export default function Home() {
       .counter > div > div > span {
         font-size: 18px;
       }
-      .counter > div > div > a {
+      .counter > a, .counter > p > a {
         font-size: 18px;
         text-decoration: none;
         color: #000;
         border-bottom: 1px solid #00e996;
         transition: 50ms ease-in-out;
       }
-      .counter > div > div > a:hover {
+      .counter > a:hover, .counter > p > a:hover {
         opacity: 0.7;
+      }
+      .counter > p {
+        font-size: 18px;
       }
       .public__goods {
         background-color: #F6F9FC;
@@ -764,3 +805,8 @@ export default function Home() {
   )
 }
 
+Home.getInitialProps = ({ query }) => {
+  return {query};
+};
+
+export default Home;
