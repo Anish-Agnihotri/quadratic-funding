@@ -7,6 +7,7 @@ import CountUp from 'react-countup'; // React countup for QF impact
 const Home = ({ query }) => {
   const [match, setMatch] = useState(1000); // Setup default match amount
   const [deletion, setDeletion] = useState(true); // Setup deletion handler to trigger match
+  const [copyText, setCopyText] = useState("Copy URL"); // Setup url copy/share button
 
   // Funding calculator
   const [data, setData] = useState([
@@ -58,6 +59,13 @@ const Home = ({ query }) => {
   const addGrant = () => {
     // Append new grant to data array
     setData(data => [...data, {funding: [], fundingAmount: 0, match: 0}]);
+  };
+
+  // Copy URL
+  const copyURL = () => {
+    navigator.clipboard.writeText(window.location.href); // Copy URL to clipboard
+    setCopyText("Copied"); // Set button text to Copied
+    setTimeout(() => setCopyText("Copy URL"), 500); // Revert button text after 0.5s
   };
 
   // Calculate match for each grant
@@ -208,6 +216,7 @@ const Home = ({ query }) => {
               sortable={false}
             />
             <button onClick={addGrant} className="add__grant">Add Grant</button>
+            <button onClick={copyURL} className="copy__url">{copyText}</button>
           </div>
         </div>
       </div>
@@ -574,9 +583,9 @@ const Home = ({ query }) => {
         font-size: 20px;
         padding: 7.5px 0px 7.5px 5px;
       }
-      .add__grant {
+      .add__grant, .copy__url {
         margin: 10px;
-        padding: 10px 15px;
+        padding: 9px 15px;
         font-size: 18px;
         font-weight: 400;
         color: #000;
@@ -589,6 +598,13 @@ const Home = ({ query }) => {
       }
       .add__grant:hover {
         background-color: #00cc7e; 
+      }
+      .copy__url {
+        background-color: #0F0557 !important;
+        color: #fff !important;
+      }
+      .copy__url:hover {
+        opacity: 0.8;
       }
       .add_grant:focus {
         outline: none;
