@@ -176,9 +176,7 @@ const Home = ({ query }) => {
         <img src="/logo.gif" alt="Quadratic Funding logo" />
         <p>Quadratic Funding is the mathematically optimal way to fund public goods in a democratic community.</p>
         <img src="/formula.gif" alt="Quadratic Funding formula" />
-        <p><a href="https://arxiv.org/pdf/1809.06421.pdf" target="_blank" rel="noopener noreferrer">Quadratic Funding Paper (PDF)</a> by <a href="https://twitter.com/glenweyl" target="_blank" rel="noopener noreferrer">@glenweyl</a> &amp; <a href="https://twitter.com/vitalikbuterin" target="_blank" rel="noopener noreferrer">@vitalikbuterin</a></p> 
-        <p>This calculator made with &lt;3 by <a href="https://twitter.com/_anishagnihotri" target="_blank" rel="noopener noreferrer">@_anishagnihotri</a> &amp; <a href="https://twitter.com/owocki" target="_blank" rel="noopener noreferrer">@owocki</a></p>
-        <p>Design by <a href="http://gitcoin.co/guistf" target="_blank" rel="noopener noreferrer">@guistf</a> &amp; <a href="http://gitcoin.co/octavian" target="_blank" rel="noopener noreferrer">@octavian</a></p>
+        <p><a href="https://gitcoin.co/hackathon/gitxchange2/onboard?utm_source=wtfisqf-gitxchange2-link&utm_medium=referrer&utm_campaign=gitxchange2-wtfisqf" target="_blank" rel="noopener noreferrer">GitxChange2: Quadratic Funding Hackathon · Learn More</a></p>
       </div>
 
       <div className="content">
