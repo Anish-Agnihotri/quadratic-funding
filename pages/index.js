@@ -296,7 +296,7 @@ const Home = ({ query }) => {
             target="_blank"
             rel="nooopener noreferrer"
           >
-            GitxChange2: Quadratic Funding Hackathon · Learn More
+            GitxChange2: Quadratic Funding Hackathon · October 2020 · Learn More
           </a>
         </p>
       </div>
@@ -550,7 +550,11 @@ const Home = ({ query }) => {
           </p>
         </div>
         <div>
-          <a href="https://gitcoin.co" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://gitcoin.co"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img
               src="https://s.gitcoin.co/static/v2/images/logo_med_hover.c2969168bf04.gif"
               alt="QF.WTF logo"
@@ -730,7 +734,8 @@ const Home = ({ query }) => {
         .subheader > img:nth-of-type(2) {
           height: 50px;
         }
-        .subheader > p, .footer > div > p {
+        .subheader > p,
+        .footer > div > p {
           max-width: 450px;
           display: block;
           margin-block-start: 0px;
@@ -749,7 +754,8 @@ const Home = ({ query }) => {
         .footer > div > p:nth-of-type(3) {
           max-width: 600px;
         }
-        .subheader > p > a, .footer > div > p > a {
+        .subheader > p > a,
+        .footer > div > p > a {
           color: #000;
           padding: 1px 3px;
           background-color: #00e996;
@@ -758,7 +764,8 @@ const Home = ({ query }) => {
           text-decoration: none;
           transition: 100ms ease-in-out;
         }
-        .subheader > p > a:hover, .footer > div > p > a:hover {
+        .subheader > p > a:hover,
+        .footer > div > p > a:hover {
           opacity: 0.75;
         }
         .content {
