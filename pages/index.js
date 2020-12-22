@@ -1,8 +1,9 @@
 import Head from "next/head"; // HTML head
 import ReactTable from "react-table-6"; // React table for QF calculator
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; // State management
 import TagsInput from "react-tagsinput"; // Tags input for funding amounts
 import CountUp from "react-countup"; // React countup for QF impact
+import YouTube from "react-youtube"; // React youtube player
 
 const own = [
   { funding: [], fundingAmount: 0, match: 0 },
@@ -290,15 +291,19 @@ const Home = ({ query }) => {
           goods in a democratic community.
         </p>
         <img src="/formula.gif" alt="Quadratic Funding formula" />
-        <p>
-          <a
-            href="https://gitcoin.co/hackathon/gitxchange2/onboard?utm_source=wtfisqf-gitxchange2-link&utm_medium=referrer&utm_campaign=gitxchange2-wtfisqf"
-            target="_blank"
-            rel="nooopener noreferrer"
-          >
-            GitxChange2: Quadratic Funding Hackathon · October 2020 · Learn More
-          </a>
-        </p>
+        <YouTube
+          videoId="HJljTtLnymE"
+          containerClassName="subheader-video"
+          className="subheader-video-frame"
+          opts={{
+            playerVars: {
+              controls: 0,
+              loop: 1,
+              modestbranding: 1,
+              playsinline: 1,
+            },
+          }}
+        />
       </div>
 
       <div className="content">
@@ -685,6 +690,16 @@ const Home = ({ query }) => {
       .rt-tr > .rt-th:nth-of-type(5), .rt-tr > .rt-td:nth-of-type(5) {
         width: 150px !important;
         flex: none !important;
+      }
+      .subheader-video {
+        padding: 40px 0px 20px 0px;
+      }
+      .subheader-video-frame {
+        border-radius: 10px;
+        -webkit-box-shadow: 0px 0px 13px -1px rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0px 0px 13px -1px rgba(0, 0, 0, 0.15);
+        box-shadow: 0px 0px 13px -1px rgba(0, 0, 0, 0.15);
+        max-width: calc(100% - 40px);
       }
       `}</style>
       <style jsx>{`
