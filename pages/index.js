@@ -476,7 +476,7 @@ const Home = ({ query }) => {
           <img src="/landscape.png" alt="Combined lanscapes" />
           <div>
             <a
-              href="https://vitalik.ca/general/2020/07/21/round6.html"
+              href="https://vitalik.ca/general/2020/07/22/round6.html"
               target="_blank"
               rel="noopener noreferrer"
             >
