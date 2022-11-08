@@ -402,7 +402,7 @@ const Home = ({ query }) => {
               <img src="/pomelo_grants_logo.png" alt="Pomelo Grants logo" />
             </a>
             <h3>Pomelo Grants</h3>
-            <span>$1,412,888</span>
+            <span>$1,779,074</span>
           </div>
           <div>
             <a
