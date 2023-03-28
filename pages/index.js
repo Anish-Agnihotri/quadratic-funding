@@ -378,7 +378,7 @@ const Home = ({ query }) => {
       <div className="counter">
         <span>Quadratic Funding Impact</span>
         <h1>
-          <CountUp end={21651000} duration={5} prefix={"$"} separator={","} />
+          <CountUp end={22907689} duration={5} prefix={"$"} separator={","} />
         </h1>
         <span>has been distributed via projects like:</span>
         <div>
@@ -402,7 +402,7 @@ const Home = ({ query }) => {
               <img src="/pomelo_grants_logo.png" alt="Pomelo Grants logo" />
             </a>
             <h3>Pomelo Grants</h3>
-            <span>$1,779,074</span>
+            <span>$3,035,689</span>
           </div>
           <div>
             <a
