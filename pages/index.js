@@ -378,7 +378,7 @@ const Home = ({ query }) => {
       <div className="counter">
         <span>Quadratic Funding Impact</span>
         <h1>
-          <CountUp end={21651000} duration={5} prefix={"$"} separator={","} />
+          <CountUp end={22907689} duration={5} prefix={"$"} separator={","} />
         </h1>
         <span>has been distributed via projects like:</span>
         <div>
